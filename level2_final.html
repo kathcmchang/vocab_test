@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<title>HKEB Vocabulary Test: Level 2</title>
+<style>
+	body {
+		background-color: #FDFCE5;
+		font-family: 'Open Sans', sans-serif;
+		color: #4A403A;
+	}
+	h1, h2, p {
+		color: #4A403A;
+		font-family: 'Open Sans', sans-serif;
+	}
+	button {
+		background-color: #F4D19B;
+		border-radius: 20px;
+		color: #4A403A;
+		font-family: 'Open Sans', sans-serif;
+		text-align: center;
+		width: auto;
+		margin: auto;
+	}
+	h1 {
+		border-radius: 20px;
+		background-color: #F4D19B;
+		width: 50%;
+		margin: auto;
+		text-align: center;
+	}
+	body {
+		text-align: center;
+	}
+	#time {
+		border-radius: 20px;
+		float: right;
+		margin-right: 30px;
+		border: 1px dotted #4A403A;
+		background-color: #F4D19B;
+		width: auto;
+	}
+	#mcq {
+		margin-left: 650px;
+		text-align: left;
+	}
+</style>
+
+<script src="english_level2.js"></script>
+
+<script>
+var countdownTimer;
+var timeLeft = 900;
+
+var words = english2;
+
+var answerPosition = -1;
+
+
+var score = 0;
+
+var buttonCount = 0;
+var buttonCount2 = 0;
+var answerCount = 0;
+function countdown()
+{
+	document.getElementById("timer").innerHTML = timeLeft;
+	if (timeLeft == 0)
+	{
+		clearInterval(countdownTimer);
+		document.getElementById("btn_next").disabled = true;
+		document.getElementById("btn_next2").disabled = true;
+		alert("Time's up!");
+	}
+
+	timeLeft--;
+}
+
+function getRandomDistractor()
+{
+	
+	var random_number = Math.random() * english2.length;
+	
+	var random_int = Math.floor(random_number);
+
+	return random_int;
+}
+
+
+function getRandomNumber()
+{
+	
+	var random_number = Math.random() * words.length;
+	
+	var random_int = Math.floor(random_number);
+
+	return random_int;
+}
+
+
+function getRandomImage()
+{
+	
+	var random_number = Math.random() * words.length;
+	
+	var random_int = Math.floor(random_number);
+
+	return random_int;
+}
+
+function getRandomPosition()
+{
+	var random_number = Math.random() * 3;
+	
+	var random_int = Math.floor(random_number);
+
+	return random_int;
+}
+function startAll() {
+	countdownTimer = setInterval("countdown()", 900);
+	displayQuestion();
+	document.getElementById("partTwo").style.display = "none";
+	document.getElementById("startbtn2").disabled = true;
+}
+function displayQuestion()
+{
+
+	var choice0Index = getRandomDistractor();
+	var choice1Index = getRandomDistractor();	
+	var choice2Index = getRandomDistractor();	
+	var choice3Index = getRandomDistractor();
+	document.getElementById("choice0").innerHTML = english2[choice0Index];
+	document.getElementById("choice1").innerHTML = english2[choice1Index];
+	document.getElementById("choice2").innerHTML = english2[choice2Index];
+	document.getElementById("choice3").innerHTML = english2[choice3Index];
+
+	var answerIndex = getRandomImage();
+	var answer = words[answerIndex];
+	var imageFileName = answer + ".png";
+	document.getElementById("myPic").src = imageFileName;
+	
+	answerPosition = getRandomPosition();
+
+	if (answerPosition == 0)
+	{
+		document.getElementById("choice0").innerHTML = answer;
+	}
+	else if (answerPosition == 1)
+	{
+		document.getElementById("choice1").innerHTML = answer;
+	}
+	else if (answerPosition == 2)
+	{
+		document.getElementById("choice2").innerHTML = answer;
+	}
+	else
+	{
+		document.getElementById("choice2").innerHTML = answer;
+	}
+
+	document.getElementById("input0").checked = false;
+	document.getElementById("input1").checked = false;
+	document.getElementById("input2").checked = false;
+	document.getElementById("input3").checked = false;
+	
+	document.getElementById("input0").disabled = false;
+	document.getElementById("input1").disabled = false;
+	document.getElementById("input2").disabled = false;
+	document.getElementById("input3").disabled = false;
+
+	document.getElementById("btn_next").disabled = true;
+	document.getElementById("message").innerHTML = "Choose your answer";
+	
+	if (document.getElementById("btn_next").clicked = true)
+	{
+	buttonCount ++;
+}
+
+    if (buttonCount > 14){
+		document.getElementById("input0").disabled = true;
+		document.getElementById("input1").disabled = true;
+		document.getElementById("input2").disabled = true;
+		document.getElementById("input3").disabled = true;
+		document.getElementById("btn_next").disabled = true;
+		alert("You have answered all part 1 questions, please start part 2!");
+		document.getElementById("mcq").innerHTML = "";
+		document.getElementById("btn_next").innerHTML = "Part 1 finished";
+		document.getElementById("message").innerHTML = "Click to start Part 2!";
+		document.getElementById("myPic").src = "welldone.gif";
+		document.getElementById("startbtn2").disabled = false;
+
+	}
+	
+
+}
+
+function play()
+{
+	var userPosition = -1;
+
+	if (document.getElementById("input0").checked)
+	{
+		userPosition = 0;
+	}
+	else if (document.getElementById("input1").checked)
+	{
+		userPosition = 1;
+	}
+	else if (document.getElementById("input2").checked)
+	{
+		userPosition = 2;
+	}
+	else if (document.getElementById("input3").checked)
+	{
+		userPosition = 3;
+	}
+
+	var output = "Correct answer is " + answerPosition + "; you choose " + userPosition;
+if (answerPosition == userPosition && answerCount == 0)
+	{
+	    score = score + 2;
+		document.getElementById("message").innerHTML = "Correct! " + output;
+		document.getElementById("feedbackGif").src = "right.gif";
+	    document.getElementById("input0").disabled = true;
+		document.getElementById("input1").disabled = true;
+		document.getElementById("input2").disabled = true;
+		document.getElementById("input3").disabled = true;
+		document.getElementById("testScore").innerHTML = "Score: " + score;
+		answerCount = 0;
+		document.getElementById("btn_next").innerHTML = "Next";
+		document.getElementById("btn_next").disabled = false;
+		
+
+
+	}
+	
+	else if (answerPosition == userPosition && answerCount > 0)
+	{
+		score = score + 1;
+		document.getElementById("message").innerHTML = "Correct! " + output;
+		document.getElementById("feedbackGif").src = "right.gif";
+	    document.getElementById("input0").disabled = true;
+		document.getElementById("input1").disabled = true;
+		document.getElementById("input2").disabled = true;
+		document.getElementById("input3").disabled = true;
+		document.getElementById("testScore").innerHTML = "Score: " + score;
+		answerCount = 0;
+		document.getElementById("btn_next").innerHTML = "Next";
+		document.getElementById("btn_next").disabled = false;
+}
+
+	else {
+		document.getElementById("message").innerHTML = "Try again! You still have one more chance!";
+	    answerCount ++;
+		document.getElementById("btn_next").innerHTML = "Please try again!";
+		document.getElementById("btn_next").disabled = true;
+	}
+	
+	if (answerCount == 2) 
+	{
+		document.getElementById("input0").disabled = true;
+		document.getElementById("input1").disabled = true;
+		document.getElementById("input2").disabled = true;
+		document.getElementById("input3").disabled = true;
+		document.getElementById("testScore").innerHTML = "Score: " + score;
+		document.getElementById("message").innerHTML = "Wrong! " + output;
+		document.getElementById("feedbackGif").src = "wrong.gif";
+	    document.getElementById("btn_next").disabled = false;
+	    document.getElementById("btn_next").innerHTML = "Next";
+		answerCount = 0;
+}
+
+}
+
+function start()
+{
+	wordIndex = getRandomNumber();
+	image = words[wordIndex] + ".png";
+	document.getElementById("display").src = image;
+	document.getElementById("partTwo").style.display = "inline";
+	document.getElementById("partOne").style.display = "none";
+	document.getElementById("feedbackGif").src = "";
+	document.getElementById("message").innerHTML = "";
+	
+}
+
+function play2()
+{
+	var answer = document.getElementById("input_answer").value;
+	var correct_answer = words[wordIndex];
+	
+	var myFeedback = "You're right!";
+	if (answer != correct_answer)
+	{
+ 		myFeedback = "The correct answer was " + correct_answer + ".";
+ 		document.getElementById("feedbackGif").src = "wrong.gif";
+	}
+	else
+	{
+		
+		score++;
+		document.getElementById("feedbackGif").src = "right.gif";
+	}
+	document.getElementById("feedback").innerHTML = myFeedback;
+	document.getElementById("startbtn2").disabled = true;
+	document.getElementById("testScore").innerHTML = "Score: " + score;
+	document.getElementById("input_answer").value = "";
+	wordIndex = getRandomNumber();
+	image = words[wordIndex] + ".png";
+	document.getElementById("display").src = image;
+	if (document.getElementById("btn_next").clicked = true)
+	{
+	buttonCount2 ++;
+	}
+    if (buttonCount2 > 14){
+		document.getElementById("input_answer").disabled = true;
+
+		alert("You have answered all the questions!");
+		document.getElementById("partTwo").style.display = "none";
+		document.getElementById("startbtn2").innerHTML = "Part 2 finished";
+		document.getElementById("feedbackGif").src = "welldone.gif";
+
+
+		if (score > 23){
+			alert("You passed the test!");
+			window.location.assign("level3_v3.html");
+		}
+		else{alert ("You failed the test!");}
+	}
+}
+
+
+</script>
+
+</head>
+<body onload="startAll()">
+<div id="time">
+<p>You have <span id="timer">900</span> seconds left.</p><br/>
+<p id="testScore">Score: 0</p>
+</div>
+<h1>HKEB Vocabulary Test: Level 2</h1> <br/><br/><br/><br/>
+<h2>Test your vocabulary</h2>
+
+<div id="partOne">
+<img id="myPic" src="" alt="No image" width="150px" />
+</div>
+<br />
+<br />
+
+<form id="mcq">
+<input type="radio" name="mc" id="input0" onclick="play()">
+<span id="choice0"></span>
+<br />
+
+<input type="radio" name="mc" id="input1" onclick="play()">
+<span id="choice1"></span>
+<br />
+
+<input type="radio" name="mc" id="input2" onclick="play()">
+<span id="choice2"></span>
+<br />
+
+<input type="radio" name="mc" id="input3" onclick="play()">
+<span id="choice3"></span>
+<br />
+
+</form>
+
+
+<p id="message"></p>
+
+<button id="btn_next" onclick="displayQuestion()" >Next</button>
+
+
+<br />
+<br />
+<button id="startbtn2" onclick="start()">Start part 2</button>
+<br/>
+<br/>
+<div id="partTwo">
+<img id="display" src="" alt="No image" width="150px"></img>
+<br />
+<br />
+
+<form id="inputtext">
+<input type="text" id="input_answer" placeholder="What is this?" size="30">
+</form>
+
+<p id="feedback"></p>
+
+<br/>
+<button id="btn_next2" onclick="play2()">Next</button>
+</div>
+<br/>
+<img id="feedbackGif" src="" width="150px"></img>
+
+<br/>
+<br/>
+<button id="menu" onclick="document.location='LT3210_group7.html'"><br/>Back to Menu<br/><br/></button>
+</body>
+</html>

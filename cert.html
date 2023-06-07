@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HKEB Vocabulary Test E-certificate</title>
+<style>
+	body {
+		background-color: #FDFCE5;
+		text-align: center;
+		font-family: 'Open Sans', sans-serif;
+	}
+	h1, h2, p {
+		color: #4A403A;
+		font-family: 'Open Sans', sans-serif;
+		text-align: center;
+	}
+	button {
+		background-color: #BFD8B8;
+		border-radius: 20px;
+		color: #4A403A;
+		font-family: 'Open Sans', sans-serif;
+		text-align: center;
+		width: auto;
+		margin: auto;
+	}
+	@media print {
+   	#noPrint{
+       display: none;
+    }
+   
+</style>
+<script>
+	function cert() {
+	var lastInput = document.getElementById("lastname");
+	var last = lastInput.value;
+	var firstInput = document.getElementById("firstname");
+	var first = firstInput.value;
+	var dateInput = document.getElementById("dob");
+	var date = dateInput.value;
+
+	var topMessage = "Certificate of Merit";
+	var messageTop = document.getElementById("top");
+	messageTop.innerHTML = topMessage;
+
+	var printMessage = "This is to certify that " + first + " " + last + " (born in " + date + ") has completed the HKEB Vocabulary Test (level 4) with an excellent performance."
+	var messageElem = document.getElementById("print");
+	messageElem.innerHTML = printMessage;
+
+	n =  new Date();
+	y = n.getFullYear();
+	m = n.getMonth() + 1;
+	d = n.getDate();
+	var btmMessage = "Test Date: " + y + "/" + m + "/" + d;
+	var messageBtm = document.getElementById("bottom");
+	messageBtm.innerHTML = btmMessage;
+
+	document.getElementById("pp").disabled = false;
+	}
+</script>
+</head>
+<body>
+<br/><br/>
+<h1 id="top">HKEB Vocabulary Test E-Certificate</h1>
+<br/><br/>
+<h2 id="print">Please enter your name and date of birth!</h2>
+<br/><br/>
+<form id="bottom">
+Last name: <input id="lastname" type="text" size="30" maxlength="20" placeholder="Name as shown on your passport" autofocus/>
+<br /><br/>
+First name: <input id="firstname" type="text" size="30" maxlength="20" placeholder="Include your middle name" autofocus/>
+<br/><br/>
+Date of birth: <input id="dob" type="date" />
+</form>
+<br/><br/>
+<div id="noPrint">
+<button onclick="cert()">Submit</button>
+<button id="pp" onclick="window.print()" disabled>Print</button>
+<br/><br/>
+<button id="menu" onclick="document.location='LT3210_group7.html'"><br/>Back to Menu<br/><br/>
+</div>
+</body>
+</html>

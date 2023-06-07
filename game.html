@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Translation Game</title>
+<style>
+	canvas {
+		border-radius: 20px;
+		background-color: #FFEBA1;
+		text-align: center;
+		width: 500px;
+		height: 300px;
+	}
+	body {
+		text-align: center;
+		background-color: #FDFCE5;
+	}
+	h1, h2, p {
+		color: #4A403A;
+		font-family: 'Open Sans', sans-serif;
+	}
+	p {
+		font-size: 25px;
+	}
+	button {
+		border: none;
+		border-radius: 20px;
+		color: #4A403A;
+		background-color: #FFEBA1;
+		font-family: 'Open Sans', sans-serif;
+		text-align: center;
+		width: auto;
+		margin: auto;
+		font-size: 20px;
+	}
+	div {
+		border-radius: 20px;
+		float: right;
+		margin-right: 30px;
+		border: 1px dotted #4A403A;
+		background-color: #FFEBA1;
+		width: 100px;
+	}
+</style>
+<script>
+var canvas;
+var ctx;
+var score = 0;
+
+var chiWords = ["狗", "貓", "兔子", "老鼠", "大象", "猴子", "狼", "狐狸", "豬", "牛", "雞", "綿羊", "蛇", "鸚鵡", "鳥", "熊貓", "倉鼠", "鵝", "山羊", "金魚", "魚", "鴨", "蝴蝶", "蜜蜂", "熊", "螞蟻","蟹", "鷹", "蝦", "松鼠"];
+var engWords = ["dog", "cat", "rabbit", "rat", "elephant", "monkey", "wolf", "fox", "pig", "cow", "chicken", "sheep", "snake", "parrot", "bird", "panda", "hamster", "goose", "goat", "goldfish", "fish", "duck", "butterfly", "bee", "bear", "ant", "crab", "eagle", "shrimp", "squirrel"];
+
+
+var chiWordIndex = -1;
+
+var engWordIndex = -1;
+
+var rect_x = 125;
+var rect_y = 0;
+var timer;
+
+function draw()
+{
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+	rect_y += 5;
+
+
+	ctx.font = "20px Helvetica";
+	ctx.fillStyle = "#4A403A";
+	ctx.fillText(engWords[engWordIndex], rect_x, rect_y);
+
+	if (rect_y >= canvas.height)
+	{
+	
+		clearInterval(timer);
+
+		if (engWordIndex == chiWordIndex)
+		{
+			document.getElementById("message").innerHTML = "Bravo! You did a great job!";
+			score++;
+		}
+		else
+		{
+			document.getElementById("message").innerHTML = "Try again!";
+		}
+		document.getElementById("myScore").innerHTML = "Score: " + score;
+	}
+}
+
+function getRandomIndex()
+{
+	var random_num = Math.random() * engWords.length;
+	var random_int = Math.floor(random_num);
+	return random_int;
+}
+
+function play()
+{
+	canvas = document.getElementById("myCanvas");
+	ctx = canvas.getContext("2d");
+
+
+	chiWordIndex = getRandomIndex();
+	document.getElementById("chiWord").innerHTML = chiWords[chiWordIndex];
+	
+
+	next();
+}
+
+
+function next(){
+
+	clearInterval(timer);
+
+	engWordIndex = getRandomIndex();
+
+
+	rect_y = 0;
+
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	
+	timer = setInterval("draw()", 200);
+}
+
+</script>
+
+</head>
+
+<body>
+<div><br/><p id="myScore">Score: 0</p><br/></div>
+<br/>
+<h1>Catch the translation of animal names!</h1>
+<h2>Let's relax a bit after the test and enjoy the game!</h2>
+<br/>
+<br/>
+<p id="chiWord"></p>
+<br/>
+<canvas id="myCanvas" width="300" height="100"></canvas>
+
+<br />
+
+<button onclick="play()">Play</button>
+<button onclick="next()">Next</button>
+
+<p id="message">Press 'Play' to start a round. 
+<br/>Click 'Next' to get another English word.</p>
+<br/>
+
+<br/>
+<button id="menu" onclick="document.location='LT3210_group7.html'"><br/>Back to Menu<br/><br/>
+</body>
+</html>
